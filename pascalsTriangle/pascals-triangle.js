@@ -7,11 +7,11 @@
  */
 
 
-var pascal = {
+var Pascals = {
 
   DisplayNthRow: function() {
     var index = $('#index').val();
-    $('#result').html(JSON.stringify(pascal.GetNthRow(index)));
+    $('#result').html(JSON.stringify(Pascals.GetNthRow(index)));
   },
 
   GetNthRow: function(index) {
@@ -46,5 +46,5 @@ var pascal = {
 };
 
 $(document).ready(function() {
-  $('#submit').on('click', function() {pascal.DisplayNthRow()});
+  $('#submit').on('click', function() {Pascals.DisplayNthRow()});
 });
