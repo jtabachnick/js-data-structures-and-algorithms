@@ -20,17 +20,43 @@ var RotateMatrix = {
       }
       matrix.push(array);
     }
+   for (var i = 0; i < matrix.length; i++) {
+      console.log(JSON.stringify(matrix[i]));
+    }
 
     return matrix;
-    // for (var i = 0; i < matrix.length; i++) {
-    //   console.log(JSON.stringify(matrix[i]));
-    // }
+ 
   },
 
   RotateMatrix: function() {
-    var originalMatrix = RotateMatrix.CreateMatrix();
-    for (var i = 0, j=originalMatrix.length - 1; i < originalMatrix.length; i++, j--) {
-      Things[i]
+    var matrix = RotateMatrix.CreateMatrix();
+    var topRow = 0;
+    var bottomRow = matrix.length - 1;
+    var leftColumn = 0;
+    var rightColumn = matrix.length - 1;
+
+    console.log('Rotating');
+
+    while (topRow < bottomRow) {
+      for (var i = topRow, j = leftColumn, k = bottomRow, l = rightColumn;
+            i < bottomRow && j < rightColumn && k > topRow && l > leftColumn;
+            i++, j++, k--, l--) {
+        var temp1 = matrix[i][rightColumn];
+        matrix[i][rightColumn] = matrix[topRow][j];
+        var temp2 = matrix[bottomRow][l];
+        matrix[bottomRow][l] = temp1;
+        temp1 = matrix[k][leftColumn];
+        matrix[k][leftColumn] = temp2;
+        matrix[topRow][j] = temp1;
+      }
+      topRow++;
+      leftColumn++;
+      rightColumn--;
+      bottomRow--;
+    }
+
+    for (var i = 0; i < matrix.length; i++) {
+      console.log(JSON.stringify(matrix[i]));
     }
   }
 };
