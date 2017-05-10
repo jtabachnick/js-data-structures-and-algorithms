@@ -20,12 +20,14 @@ var RotateMatrix = {
       }
       matrix.push(array);
     }
-   for (var i = 0; i < matrix.length; i++) {
-      console.log(JSON.stringify(matrix[i]));
+
+    $('#result').html('Original Matrix: <br>');
+    for (var i = 0; i < matrix.length; i++) {
+      $('#result').append(JSON.stringify(matrix[i]) + '<br>');
     }
 
     return matrix;
- 
+
   },
 
   RotateMatrix: function() {
@@ -35,7 +37,7 @@ var RotateMatrix = {
     var leftColumn = 0;
     var rightColumn = matrix.length - 1;
 
-    console.log('Rotating');
+    $('#result').append('Rotating...<br>');
 
     while (topRow < bottomRow) {
       for (var i = topRow, j = leftColumn, k = bottomRow, l = rightColumn;
@@ -56,7 +58,11 @@ var RotateMatrix = {
     }
 
     for (var i = 0; i < matrix.length; i++) {
-      console.log(JSON.stringify(matrix[i]));
+      $('#result').append(JSON.stringify(matrix[i]) + '<br>');
     }
   }
 };
+
+$(document).ready(function() {
+    $('#generate').on('click', function() {RotateMatrix.RotateMatrix()});
+});
