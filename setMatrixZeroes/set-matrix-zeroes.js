@@ -32,7 +32,7 @@ var SetZeroes = {
         matrix.push(array);
       }
 
-      $('#result').html('Original Matrix: <br>');
+      
       for (var i = 0; i < matrix.length; i++) {
         $('#result').append(JSON.stringify(matrix[i]) + '<br>');
       }
@@ -43,6 +43,8 @@ var SetZeroes = {
 
   ZeroOut: function() {
     var matrix = SetZeroes.CreateMatrix();
+
+    //posible m*n space, could be reduced to m+n with hash sets
     var rowsToZero = [];
     var columnsToZero = [];
 
@@ -73,13 +75,67 @@ var SetZeroes = {
       for (var p = 0; p < matrix.length; p++) {
         $('#result').append(JSON.stringify(matrix[p]) + '<br>');
       }
+  },
+
+
+  ZeroOutImproved: function() {
+    //should be constant space
+    var matrix = SetZeroes.CreateMatrix();
+    var columnZeroContainsZero = false;
+    var rowZeroContainsZero = false;
+    for (var i = 0; i < matrix.length; i++) {
+      for (var j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j] === 0) {
+          matrix[0][j] = matrix[i][0] = 0;
+
+          if (i === 0) {
+            rowZeroContainsZero = true;
+          }
+
+          if (j == 0) {
+            columnZeroContainsZero = true;
+          }
+        }
+      }
+    }
+
+    for (var i = matrix.length - 1; i >= 1; i--) {
+      for (var j = matrix[i].length - 1; j >= 1; j--) {
+        if (matrix[0][j] === 0 || matrix[i][0] === 0) {
+          matrix[i][j] = 0;
+        }
+      }
+    }
+
+    if (rowZeroContainsZero) {
+      for (var i = 0; i < matrix[0].length; i++) {
+        matrix[0][i] = 0;
+      }
+    }
+
+    if (columnZeroContainsZero) {
+      for (var i = 0; i < matrix.length; i++) {
+        matrix[i][0] = 0;
+      }
+    }
+
+
+    $('#result').append('Improved Zeroed Matrix: <br>');
+      for (var p = 0; p < matrix.length; p++) {
+        $('#result').append(JSON.stringify(matrix[p]) + '<br>');
+      }
   }
+
+
 
 };
 
 
 $(document).ready(function() {
   $('#generate').on('click', function() {
+    $('#result').html('Original Matrix: <br>');
     SetZeroes.ZeroOut();
+    $('#result').append('Original Matrix: <br>');
+    SetZeroes.ZeroOutImproved();
   });
 });
